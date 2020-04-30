@@ -1,7 +1,6 @@
 {
   "name": "ps-react-ae2s",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@babel/core": "7.9.0",
     "@svgr/webpack": "4.3.3",
@@ -17,6 +16,7 @@
     "babel-preset-react-app": "^9.1.2",
     "camelcase": "^5.3.1",
     "case-sensitive-paths-webpack-plugin": "2.3.0",
+    "commonjs": "0.0.1",
     "css-loader": "3.4.2",
     "dotenv": "8.2.0",
     "dotenv-expand": "5.1.0",
@@ -72,7 +72,8 @@
     "build:docs": "node scripts/build.js",
     "test": "node scripts/test.js",
     "predeploy:docs": "npm run build:docs",
-    "deploy:docs": "gh-pages -d build"
+    "deploy:docs": "gh-pages -d build",
+    "build:commonjs": "cross-env NODE_ENV=production babel ./src/components --out-dir ./lib --ignore spec.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -141,15 +142,33 @@
   },
   "babel": {
     "presets": [
-      "react-app"
+      [
+        "react-app",
+        {
+          "flow": true,
+          "typescript": false
+        }
+      ],
+      [
+        "env",
+        {
+          "modules": "commonjs"
+        }
+      ]
     ]
   },
   "devDependencies": {
     "@types/highlight.js": "^9.12.3",
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "chokidar": "^3.4.0",
+    "cpx": "^1.5.0",
+    "cross-env": "^4.0.0",
     "gh-pages": "^0.12.0",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
-    "react-docgen": "^5.3.0"
+    "react-docgen": "^5.3.0",
+    "rimraf": "^2.6.1"
   }
 }
